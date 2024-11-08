@@ -1,0 +1,29 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name {{ server_name | default('_') }};
+
+    # Путь к статическим файлам
+    root {{ nginx_root | default('/var/www/html') }};
+    index index.html index.htm;
+
+    # Логи
+    access_log /var/log/nginx/default_access.log;
+    error_log /var/log/nginx/default_error.log;
+
+    # Раздача статических файлов
+    location /static/ {
+        alias {{ nginx_static_path | default('/var/www/html/static') }};
+        autoindex on;
+    }
+
+    # Проксирование запросов к контейнеру с Django
+    location / {
+        proxy_pass http://{{ django_backend_host | default('localhost') }}:{{ django_backend_port | default(8000) }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

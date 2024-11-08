@@ -1,0 +1,26 @@
+---
+- name: Playbook for Docker installation and Nginx configuration
+  hosts: app
+  become: true
+  roles:
+    - docker
+
+  tasks:
+    - name: Ensure apt package list is updated (apt-get update)
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Run Django container
+      community.docker.docker_container:
+        name: app
+        image: timurbabs/django
+        state: started
+        ports:
+          - "8000:8000"
+
+- name: Playbook for Nginx configuration
+  hosts: web
+  become: true
+  roles:
+    - nginx

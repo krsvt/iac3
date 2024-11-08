@@ -1,0 +1,27 @@
+---
+# defaults file for Docker
+docker_required_packages:
+  - apt-transport-https # https в apt для скачивания docker
+  - ca-certificates # корневые сертификаты
+  - curl
+  - gnupg # docker проверяет подлинность пакетов через gpg ключи
+  - software-properties-common
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+docker_gpg_key_url: "https://download.docker.com/linux/ubuntu/gpg"
+
+docker_url: "https://download.docker.com/linux/ubuntu"
+
+# e.g. bionic = 18.04, focal = 20.04, jammy = 22.04
+docker_dist: "{{ ansible_lsb.codename }}"
+docker_version: "stable"
+docker_user: "{{ ansible_user }}"
+
+docker_services:
+  - docker.service
+  - containerd.service

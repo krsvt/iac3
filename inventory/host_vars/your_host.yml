@@ -1,0 +1,5 @@
+nginx_root: /path/to/your/static/files
+nginx_static_path: /path/to/your/static/files/static
+django_backend_host: "app_server_ip" # IP-адрес или hostname контейнера с Django
+django_backend_port: 8000
+server_name: "example.com"

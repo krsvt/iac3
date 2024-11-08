@@ -1,0 +1,49 @@
+---
+# tasks file for Docker
+- name: Remove old Docker APT repository (if any)
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] {{ docker_url }} {{ docker_dist }} {{ docker_version }}"
+    state: absent
+
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ docker_required_packages }}"
+
+- name: Add Docker's official GPG key
+  ansible.builtin.apt_key:
+    url: "{{ docker_gpg_key_url }}"
+    state: present
+
+- name: Add Docker APT repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc]
+      {{ docker_url }} {{ docker_dist }} {{ docker_version }}
+    filename: docker
+    state: present
+    update_cache: yes
+
+- name: Install Docker and related packages
+  apt:
+    update_cache: true
+    state: present
+    name: "{{ docker_packages }}"
+
+# Linux Docker postinstall
+- name: Add Docker group
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add user to Docker group
+  ansible.builtin.user:
+    name: "{{ docker_user }}"
+    groups: docker
+    append: true
+
+- name: Enable and start Docker services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop: "{{ docker_services }}"
