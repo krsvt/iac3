@@ -7,6 +7,7 @@ vagrant up
 ## Install roles
 
 docker role in Gitlab: https://gitlab.com/ansible-roles4162343/ansible-docker#
+
 nginx role in Gitlab: https://gitlab.com/ansible-roles4162343/ansible-nginx#
 ```
 ansible-galaxy install -r requirements.yml
