@@ -1,11 +1,15 @@
 # nginx.conf.j2
 
+# стандартный пользователь для веб-серверов
 user www-data;
+# определяет количество процессов в зависимости от ядер
 worker_processes auto;
+# путь к файлу PID для главного процесса
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
 
 events {
+# максимальное количество соединений на один процесс
     worker_connections 768;
     # multi_accept on;
 }
@@ -26,6 +30,14 @@ http {
     gzip on;
     gzip_disable "msie6";
 
+    # балансировка
+    upstream django_backend {
+        server 192.168.56.201:8000;
+        server 192.168.56.202:8000;
+    }
+
     include /etc/nginx/conf.d/*.conf;
     include /etc/nginx/sites-enabled/*;
+
+
 }

@@ -20,6 +20,7 @@
           - "8000:8000"
 
 - name: Playbook for Nginx configuration
+  tags: [nginx]
   hosts: web
   become: true
   roles:
