@@ -20,5 +20,7 @@ ansible-playbook playbook.yaml -i inventory.ini
 ## Check apps
 Port-forwarding:
 http://localhost:8001 - srv1, application 
+
 http://localhost:8002 - srv2, application 
+
 http://localhost:8003 (http://localhost:8003/catalog) - srv3, nginx 
