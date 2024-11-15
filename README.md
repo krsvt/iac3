@@ -10,7 +10,7 @@ docker role in Gitlab: https://gitlab.com/ansible-roles4162343/ansible-docker#
 
 nginx role in Gitlab: https://gitlab.com/ansible-roles4162343/ansible-nginx#
 ```
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install -r requirements.yml -p roles
 ```
 
 ## Run playbook
