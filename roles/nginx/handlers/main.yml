@@ -1,2 +1,7 @@
 ---
 # handlers file for nginx
+- name: reload nginx
+  service:
+    name: "{{ nginx_service }}"
+    state: reloaded
+  become: true

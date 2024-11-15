@@ -1,2 +1,9 @@
 ---
 # defaults file for nginx
+nginx_package: nginx
+nginx_service: nginx
+nginx_conf_path: /etc/nginx/nginx.conf
+nginx_default_site_src: /etc/nginx/sites-available/default
+nginx_default_site_dest: /etc/nginx/sites-enabled/default
+nginx_conf_template_path: nginx.conf.j2
+nginx_default_template_path: default.conf.j2

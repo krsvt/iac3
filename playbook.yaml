@@ -24,4 +24,7 @@
   hosts: web
   become: true
   roles:
-    - nginx
+    - role: nginx
+      vars:
+        nginx_conf_template_path: "{{ playbook_dir }}/templates/nginx.conf.j2"
+        nginx_default_template_path: "{{ playbook_dir }}/templates/default.conf.j2"
